@@ -78,7 +78,7 @@ $ node scaffold.js --help
 ```
 
 ## TODO List
-* ✓ --Generate models--
+* ✓ ~~Generate models~~
 * Generate controllers
 * Generate views
 * Accept other http frameworks (besides express)
