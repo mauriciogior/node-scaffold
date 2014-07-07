@@ -1,0 +1,24 @@
+{
+	"name": "node-scaffold",
+	"version": "0.0.1",
+	"description": "A library that provides great scaffolding",
+	"main": "index.js",
+	"scripts": {
+		"test": "echo \"Error: no test specified\" && exit 1"
+	},
+	"repository": {
+		"type": "git",
+		"url": "git://github.com/mauriciogior/node-scaffold.git"
+	},
+	"keywords": [
+		"scaffold",
+		"express",
+		"mongoose"
+	],
+	"author": "Mauricio Giordano <mauricio.c.giordano@gmail.com> (http://mauriciogiordano.com/)",
+	"license": "GPL v2",
+	"bugs": {
+		"url": "https://github.com/mauriciogior/node-scaffold/issues"
+	},
+	"homepage": "https://github.com/mauriciogior/node-scaffold"
+}
