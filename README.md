@@ -77,3 +77,12 @@ To see other usage options, just
 $ node scaffold.js --help
 ```
 
+## TODO List
+* Generate models ✓
+* Generate controllers
+* Generate views
+* Accept other http frameworks (besides express)
+* Accept other db engines (besides mongodb)
+* Accept other db frameworks (besides mongoose)
+* Accept other layout engine (besides jade)
+* Allow shell scaffolding
