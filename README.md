@@ -1,9 +1,11 @@
-### Node Scaffold
+# Node Scaffold
 Quick scaffolding on several frameworks!
 
-## Installation
+### Installation
 
-`$ npm install node-scaffold -g`
+```shell
+$ npm install node-scaffold -g
+```
 
 ## Quick Usage
 
@@ -66,10 +68,12 @@ require('../index.js').exec();
 ```
 
 Now, just execute it!
-
-`node scaffold.js --file /path/to/scaffold.json`
+```shell
+$ node scaffold.js --file /path/to/scaffold.json
+```
 
 To see other usage options, just
-
-`node scaffold.js --help`
+```shell
+$ node scaffold.js --help
+```
 
