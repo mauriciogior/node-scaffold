@@ -10,49 +10,6 @@ var async = require('async')
 var User = userModel.getUser();
 
 /*
- * [GET] GET ALL ENTRIES FOR User
- *
- * @return User user
- */
-exports.getUsers = function(req, res)
-{
-	var data = req.body;
-
-	var status = 200;
-	var format = 'html';
-
-	var users = null;
-
-	async.series([
-
-		function(callback)
-		{
-			if(data != null && data.format == 'json')
-				format = data.format;
-			callback();
-		},
-		function(callback)
-		{
-			User
-			.find()
-			.exec(function(err, retData))
-			{
-				users = retData;
-
-				callback()
-			}
-		}
-
-	], function(invalid)
-	{
-		if(format == 'json')
-			res.status(status).send(users);
-		else
-			res.render('getUsers', { data : users });
-	});
-};
-
-/*
  * [POST] CREATE AN ENTRY FOR User
  *
  * @param String name
@@ -108,6 +65,8 @@ exports.postUser = function(req, res)
 			}
 			else 
 			{
+				if(data.format == 'json')
+					format = data.format;
 				callback();
 			}
 		},
@@ -153,7 +112,94 @@ exports.postUser = function(req, res)
 		if(format == 'json')
 			res.status(status).send(user);
 		else
-			res.render('postUser', { data : user });
+			res.render('getUser', { data : user });
+	});
+};
+
+/*
+ * [GET] GET SINGLE ENTRY FOR User
+ *
+ * @return User user
+ */
+exports.getUser = function(req, res)
+{
+	var id = req.params.id;
+	var data = req.body;
+
+	var status = 200;
+	var format = 'html';
+
+	var user = null;
+
+	async.series([
+
+		function(callback)
+		{
+			if(data != null && data.format == 'json')
+				format = data.format;
+			callback();
+		},
+		function(callback)
+		{
+			User
+			.findOne({ _id : id })
+			.exec(function(err, retData))
+			{
+				user = retData;
+
+				callback()
+			}
+		}
+
+	], function(invalid)
+	{
+		if(format == 'json')
+			res.status(status).send(user);
+		else
+			res.render('getUser', { data : user });
+	});
+};
+
+/*
+ * [GET] GET ALL ENTRIES FOR User
+ *
+ * @return User user
+ */
+exports.getUsers = function(req, res)
+{
+	var data = req.body;
+
+	var status = 200;
+	var format = 'html';
+
+	var users = null;
+
+	async.series([
+
+		function(callback)
+		{
+			if(data != null && data.format == 'json')
+				format = data.format;
+			callback();
+		},
+		function(callback)
+		{
+			User
+			.find()
+			.exec(function(err, retData))
+			{
+				users = retData;
+
+				callback()
+			}
+		}
+
+	], function(invalid)
+	{
+		if(format == 'json')
+			res.status(status).send(users);
+		else
+			res.render('getUsers', { data : users });
 	});
 };
 
