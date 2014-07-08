@@ -66,7 +66,6 @@
 			if(validateConfig.isValid(this))
 			{
 				this.job(file);
-				this.finalize();
 			}
 		},
 
@@ -79,11 +78,25 @@
 				fs.mkdirSync('./models');
 			}
 
+			if(!fs.existsSync('./controllers'))
+			{
+				fs.mkdirSync('./controllers');
+			}
+
+			if(!fs.existsSync('./views'))
+			{
+				fs.mkdirSync('./views');
+			}
+
 			var dissectModel = require('./lib/dissect-model');
+			var dissectController = require('./lib/dissect-controller');
+			//var dissectView = require('./lib/dissect-model');
 
 			for(var index in json.models)
 			{
 				dissectModel.dissect(this, json.models[index]);
+				dissectController.dissect(this, json.models[index]);
+				//dissectView.dissect(this, json.models[index]);
 			}
 		},
 

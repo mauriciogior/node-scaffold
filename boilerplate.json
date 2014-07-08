@@ -19,24 +19,6 @@
 					]
 				}
 			]
-		},
-		{
-			"name": "Car", // always singular!
-			"crud": true,
-			"fields": [
-				{ "name": "name", "type": "String" },
-				{ "name": "username", "type": "String", "unique": true },
-				{ "name": "password", "type": "String" },
-				{ "name": "age", "type": "Number" },
-				{
-					"name": "devices",
-					"type": "Json",
-					"content": [
-						{ "name": "model", "type": "String" },
-						{ "name": "color", "type": "Number" }
-					]
-				}
-			]
 		}
 	]
 }
