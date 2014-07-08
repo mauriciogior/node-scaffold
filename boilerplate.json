@@ -8,6 +8,7 @@
 			"fields": [
 				{ "name": "name", "type": "String" },
 				{ "name": "username", "type": "String", "unique": true },
+				{ "name": "email", "type": "String", "unique": true },
 				{ "name": "password", "type": "String" },
 				{ "name": "age", "type": "Number" },
 				{
