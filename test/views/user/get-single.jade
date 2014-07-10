@@ -1,0 +1,44 @@
+/*
+ * [GET] GET SINGLE ENTRY FOR User
+ *
+ * @return User user
+ */
+exports.getUser = function(req, res)
+{
+	var id = req.params.id;
+	var data = req.body;
+
+	var status = 200;
+	var format = 'html';
+
+	var user = null;
+
+	async.series([
+
+		function(callback)
+		{
+			if(data != null && data.format == 'json')
+				format = data.format;
+			callback();
+		},
+		function(callback)
+		{
+			User
+			.findOne({ _id : id })
+			.exec(function(err, retData))
+			{
+				user = retData;
+
+				callback()
+			}
+		}
+
+	], function(invalid)
+	{
+		if(format == 'json')
+			res.status(status).send(user);
+		else
+			res.render('getUser', { data : user });
+	});
+};
+

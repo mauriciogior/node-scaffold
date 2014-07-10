@@ -1,0 +1,33 @@
+doctype html
+html
+	head
+		title User model
+		meta(charset='utf-8')
+		meta(name='viewport', content='width=device-width, initial-scale=1.0')
+	body
+		h1 All entries for User
+		table
+			thead
+				td name
+				td username
+				td email
+				td password
+				td age
+				td devices
+				td Edit
+				td Delete
+			tbody
+				-for(var i=0; i<users.length; i++)
+					tr
+						td users[i].name
+						td users[i].username
+						td users[i].email
+						td users[i].password
+						td users[i].age
+						td users[i].devices
+						td
+							a(href='/user/'+=users[i]._id) Edit
+						td
+							a(href='/user/'+=users[i]._id +'/delete') Delete
+
+		a(href='/user/new') Add new entry

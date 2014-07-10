@@ -1,0 +1,57 @@
+/*
+ * [DELETE] DELETE AN ENTRY FOR User
+ *
+ * @return null
+ */
+exports.deleteUser = function(req, res)
+{
+	var id = req.params.id;
+
+	var status = 200;
+	var format = 'html';
+
+	var user = null;
+
+	async.series([
+
+		function(callback)
+		{
+			if(data != null && data.format == 'json')
+				format = data.format;
+			callback();
+		},
+		function(callback)
+		{
+			User
+			.findOne({ _id : id })
+			.exec(function(err, retData)
+			{
+				if(retData == null)
+				{
+					status = 400;
+					callback(true);
+				}
+				else
+				{
+					user = retData;
+
+					callback();
+				}
+			});
+		},
+		function(callback)
+		{
+			user.remove(function(err, retData)
+			{
+				callback();
+			});
+		}
+	], function(invalid)
+	{
+		if(format == 'json')
+			res.status(status).send('');
+		else
+			res.render('deleteUser', { data : user });
+	});
+};
+

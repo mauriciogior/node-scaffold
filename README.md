@@ -79,8 +79,9 @@ $ node scaffold.js --help
 
 ## TODO List
 * ✓ ~~Generate models~~
-* Generate controllers
+* ✓ ~~Generate controllers~~
 * Generate views
+* Generate application
 * Accept other http frameworks (besides express)
 * Accept other db engines (besides mongodb)
 * Accept other db frameworks (besides mongoose)
