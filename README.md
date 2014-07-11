@@ -7,6 +7,19 @@ Quick scaffolding on several frameworks!
 $ npm install node-scaffold -g
 ```
 
+### Description
+
+v0.1
+Now it is only working with Express + MongoDB + Mongoose.
+
+I'll add another more options later!
+
+Working:
+* ✓ ~~Generate models~~
+* ✓ ~~Generate controllers~~
+* ✓ ~~Generate views~~
+* ✓ ~~Generate application~~
+
 ## Quick Usage
 
 You will need to create a file to place your scaffold (shell also in future).
@@ -72,16 +85,15 @@ Now, just execute it!
 $ node scaffold.js --file /path/to/scaffold.json
 ```
 
-To see other usage options, just
+Remeber to install all dependencies!
+
+To see other usage options (very limited at the moment), just
 ```shell
 $ node scaffold.js --help
 ```
 
 ## TODO List
-* ✓ ~~Generate models~~
-* ✓ ~~Generate controllers~~
-* ✓ ~~Generate views~~
-* Generate application
+* Add relationships between models
 * Accept other http frameworks (besides express)
 * Accept other db engines (besides mongodb)
 * Accept other db frameworks (besides mongoose)

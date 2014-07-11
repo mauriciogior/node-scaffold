@@ -1,6 +1,6 @@
 {
 	"name": "node-scaffold",
-	"version": "0.0.1",
+	"version": "0.1.0",
 	"description": "A library that provides great scaffolding",
 	"main": "index.js",
 	"scripts": {
@@ -16,7 +16,12 @@
 		"mongoose"
 	],
 	"author": "Mauricio Giordano <mauricio.c.giordano@gmail.com> (http://mauriciogiordano.com/)",
-	"license": "GPL v2",
+	"licenses": [
+		{
+			"url": "https://github.com/mauriciogior/node-scaffold/blob/master/LICENSE",
+			"type": "GPL v2"
+		}
+	],
 	"bugs": {
 		"url": "https://github.com/mauriciogior/node-scaffold/issues"
 	},
