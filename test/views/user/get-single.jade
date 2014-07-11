@@ -1,44 +1,17 @@
-/*
- * [GET] GET SINGLE ENTRY FOR User
- *
- * @return User user
- */
-exports.getUser = function(req, res)
-{
-	var id = req.params.id;
-	var data = req.body;
-
-	var status = 200;
-	var format = 'html';
-
-	var user = null;
-
-	async.series([
-
-		function(callback)
-		{
-			if(data != null && data.format == 'json')
-				format = data.format;
-			callback();
-		},
-		function(callback)
-		{
-			User
-			.findOne({ _id : id })
-			.exec(function(err, retData))
-			{
-				user = retData;
-
-				callback()
-			}
-		}
-
-	], function(invalid)
-	{
-		if(format == 'json')
-			res.status(status).send(user);
-		else
-			res.render('getUser', { data : user });
-	});
-};
-
+!!!
+html
+	head
+		title User model
+		meta(charset='utf-8')
+		meta(name='viewport', content='width=device-width, initial-scale=1.0')
+	body
+		h1 Single entry for User
+		ul
+			li= '<b>name: </b>' + user.name 
+			li= '<b>username: </b>' + user.username 
+			li= '<b>email: </b>' + user.email 
+			li= '<b>password: </b>' + user.password 
+			li= '<b>age: </b>' + user.age 
+			li= '<b>devices: </b>' + user.devices 
+		a(href='/user/'+=user._id) Edit
+		a(href='/user/'+=user._id +'/delete') Delete

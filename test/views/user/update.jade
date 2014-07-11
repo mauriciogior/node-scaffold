@@ -1,126 +1,28 @@
-/*
- * [PUT] EDIT AN ENTRY FOR User
- *
- * @param [opt] String name
- * @param [opt] String username
- * @param [opt] String email
- * @param [opt] String password
- * @param [opt] Number age
- *
- * @return User user
- */
-exports.putUser = function(req, res)
-{
-	var id = req.params.id;
-	var data = req.body;
+!!!
+html
+	head
+		title User model
+		meta(charset='utf-8')
+		meta(name='viewport', content='width=device-width, initial-scale=1.0')
+	body
+		h1 Edit entry for User
+		form(action='/user', method='POST')
+			input(type='hidden', name='_method', value='PUT')
 
-	var status = 200;
-	var format = 'html';
-
-	var user = null;
-
-	async.series([
-
-		function(callback)
-		{
-			if(data == null)
-			{
-				status = 400;
-				callback(true);
-			}
-			else
-			{
-				if(data.format == 'json')
-					format = data.format;
-				callback();
-			}
-		},
-		function(callback)
-		{
-			User
-			.findOne({ _id : id })
-			.exec(function(err, retData)
-			{
-				if(retData == null)
-				{
-					status = 400;
-					callback(true);
-				}
-				else
-				{
-					user = retData;
-
-					callback();
-				}
-			});
-		},
-		function(callback)
-		{
-			if(data.name !== undefined)
-			{
-				user.name = name;
-			}
-			if(data.username !== undefined)
-			{
-				user.username = username;
-			}
-			if(data.email !== undefined)
-			{
-				user.email = email;
-			}
-			if(data.password !== undefined)
-			{
-				user.password = password;
-			}
-			if(data.age !== undefined)
-			{
-				user.age = age;
-			}
-		},
-		function(callback)
-		{
-			User
-			.findOne({
-				$or : [
-					{ username : data.username },
-					{ email : data.email }
-				]
-			})
-			.exec(function(err, retData)
-			{
-				if(retData != null)
-				{
-					if(retData._id != user._id)
-					{
-						status = 400;
-						callback(true);
-					}
-					else
-					{
-						callback();
-					}
-				}
-				else
-				{
-					callback();
-				}
-			});
-		},
-		function(callback)
-		{
-			user.save(function(err, retData)
-			{
-				user = retData;
-
-				callback();
-			});
-		}
-	], function(invalid)
-	{
-		if(format == 'json')
-			res.status(status).send(user);
-		else
-			res.render('getUser', { data : user });
-	});
-};
-
+			fieldset
+				label name
+				input(name='name', value=user.name)
+			fieldset
+				label username
+				input(name='username', value=user.username)
+			fieldset
+				label email
+				input(name='email', value=user.email)
+			fieldset
+				label password
+				input(name='password', value=user.password)
+			fieldset
+				label age
+				input(name='age', value=user.age)
+			fieldset
+				button(action='submit') Update

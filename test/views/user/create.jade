@@ -1,109 +1,26 @@
-/*
- * [POST] CREATE AN ENTRY FOR User
- *
- * @param String name
- * @param String username
- * @param String email
- * @param String password
- * @param Number age
- *
- * @return User user
- */
-exports.postUser = function(req, res)
-{
-	var data = req.body;
-
-	var status = 200;
-	var format = 'html';
-
-	var user = null;
-
-	async.series([
-
-		function(callback)
-		{
-			if(data == null)
-			{
-				status = 400;
-				callback(true);
-			}
-			else if(data.name === undefined)
-			{
-				status = 400;
-				callback(true);
-			}
-			else if(data.username === undefined)
-			{
-				status = 400;
-				callback(true);
-			}
-			else if(data.email === undefined)
-			{
-				status = 400;
-				callback(true);
-			}
-			else if(data.password === undefined)
-			{
-				status = 400;
-				callback(true);
-			}
-			else if(data.age === undefined)
-			{
-				status = 400;
-				callback(true);
-			}
-			else 
-			{
-				if(data.format == 'json')
-					format = data.format;
-				callback();
-			}
-		},
-		function(callback)
-		{
-			User
-			.findOne({
-				$or : [
-					{ username : data.username },
-					{ email : data.email }
-				]
-			})
-			.exec(function(err, retData))
-			{
-				if(retData != null)
-				{
-					status = 400;
-					callback(true);
-				}
-				else
-				{
-					callback();
-				}
-			});
-		},
-		function(callback)
-		{
-			user = new User({
-				name = data.name,
-				username = data.username,
-				email = data.email,
-				password = data.password,
-				age = data.age,
-			});
-
-			user.save(function(err, retData)
-			{
-				user = retData;
-
-				callback();
-			});
-		}
-	], function(invalid)
-	{
-		if(format == 'json')
-			res.status(status).send(user);
-		else
-			res.render('getUser', { data : user });
-	});
-};
-
+!!!
+html
+	head
+		title User model
+		meta(charset='utf-8')
+		meta(name='viewport', content='width=device-width, initial-scale=1.0')
+	body
+		h1 New entry for User
+		form(action='/user', method='POST')
+			fieldset
+				label name
+				input(name='name')
+			fieldset
+				label username
+				input(name='username')
+			fieldset
+				label email
+				input(name='email')
+			fieldset
+				label password
+				input(name='password')
+			fieldset
+				label age
+				input(name='age')
+			fieldset
+				button(action='submit') Create
