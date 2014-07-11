@@ -55,17 +55,7 @@ Here is a sample of this file:
 			"crud": true,
 			"fields": [
 				{ "name": "name", "type": "String" },
-				{ "name": "username", "type": "String", "unique": true },
-				{ "name": "password", "type": "String" },
-				{ "name": "age", "type": "Number" },
-				{
-					"name": "devices",
-					"type": "Json",
-					"content": [
-						{ "name": "model", "type": "String" },
-						{ "name": "color", "type": "Number" }
-					]
-				}
+				{ "name": "model", "type": "String" }
 			]
 		}
 	]
@@ -85,10 +75,19 @@ Now, just execute it!
 $ node scaffold.js --file /path/to/scaffold.json
 ```
 
+*If you have problems like "cannot find module 'node-scaffold'", probably your NODE_PATH is wrong!*
+
+*In mac:*
+```shell
+$ export NODE_PATH=/usr/local/lib/node_modules
+```
+
 Remeber to install all dependencies!
+```shell
+$ sudo npm install
+```
 
 Now you just need to test your routes! In this example:
-
 ```shell
 curl http://localhost:3000/user
 curl http://localhost:3000/car
