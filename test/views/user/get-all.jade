@@ -1,12 +1,16 @@
-!!!
+doctype html
 html
 	head
 		title User model
 		meta(charset='utf-8')
 		meta(name='viewport', content='width=device-width, initial-scale=1.0')
+		style.
+			table { margin: 10px 0; }
+			td { padding: 5px; }
 	body
 		h1 All entries for User
-		table
+		p <b>Path:</b> /user
+		table(border='1', cellspacing='0')
 			thead
 				td name
 				td username
@@ -14,20 +18,17 @@ html
 				td password
 				td age
 				td devices
-				td Edit
-				td Delete
+				td
 			tbody
 				-for(var i=0; i<users.length; i++)
 					tr
-						td users[i].name
-						td users[i].username
-						td users[i].email
-						td users[i].password
-						td users[i].age
-						td users[i].devices
+						td=users[i].name
+						td=users[i].username
+						td=users[i].email
+						td=users[i].password
+						td=users[i].age
+						td=users[i].devices
 						td
-							a(href='/user/'+=users[i]._id) Edit
-						td
-							a(href='/user/'+=users[i]._id +'/delete') Delete
+							a(href='/user/'+users[i]._id) View
 
 		a(href='/user/new') Add new entry

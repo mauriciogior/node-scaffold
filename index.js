@@ -139,6 +139,10 @@
 			{
 				console.log('\x1b[1;97;42m%s\x1b[0m %s', ' SUCCESS ', message);
 			}
+			else if(type == ct.MSG_FAILED)
+			{
+				console.log('\x1b[1;97;101m%s\x1b[0m %s', '!FAIL!', message);
+			}
 		},
 
 		finalize : function()

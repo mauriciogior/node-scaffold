@@ -8,26 +8,19 @@ html
 			table { margin: 10px 0; }
 			td { padding: 5px; }
 	body
-		h1 New entry for User
+		h1 New entry for User - devices
 		p <b>Path:</b> /
 			a(href='/user') user
-			| /new
-		form(action='/user', method='POST')
+			='/'
+			a(href='/user/'+user._id)=user._id
+			='/devices/new'
+		form(action='/user/'+user._id+'/devices', method='POST')
 			fieldset
-				label name
-				input(name='name', type='text')
+				label model
+				input(name='model', type='text')
 			fieldset
-				label username
-				input(name='username', type='text')
-			fieldset
-				label email
-				input(name='email', type='text')
-			fieldset
-				label password
-				input(name='password', type='text')
-			fieldset
-				label age
-				input(name='age', type='number')
+				label color
+				input(name='color', type='number')
 			fieldset
 				button(action='submit') Create
 

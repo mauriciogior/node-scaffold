@@ -1,12 +1,20 @@
-!!!
+doctype html
 html
 	head
 		title User model
 		meta(charset='utf-8')
 		meta(name='viewport', content='width=device-width, initial-scale=1.0')
+		style.
+			table { margin: 10px 0; }
+			td { padding: 5px; }
 	body
 		h1 Edit entry for User
-		form(action='/user', method='POST')
+		p <b>Path:</b> /
+			a(href='/user') user
+			='/'
+			a(href='/user/'+user._id)=user._id
+			='/edit'
+		form(action='/user/'+ user._id, method='POST')
 			input(type='hidden', name='_method', value='PUT')
 
 			fieldset
@@ -26,3 +34,7 @@ html
 				input(name='age', value=user.age)
 			fieldset
 				button(action='submit') Update
+				a(href='/user/'+user._id)
+					button(type='button') Cancel
+		p
+			a(href='/user') User home

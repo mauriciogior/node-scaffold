@@ -1,17 +1,52 @@
-!!!
+doctype html
 html
 	head
 		title User model
 		meta(charset='utf-8')
 		meta(name='viewport', content='width=device-width, initial-scale=1.0')
+		style.
+			table { margin: 10px 0; }
+			td { padding: 5px; }
 	body
 		h1 Single entry for User
+		p <b>Path:</b> /
+			a(href='/user') user
+			='/'+user._id
 		ul
-			li= '<b>name: </b>' + user.name 
-			li= '<b>username: </b>' + user.username 
-			li= '<b>email: </b>' + user.email 
-			li= '<b>password: </b>' + user.password 
-			li= '<b>age: </b>' + user.age 
-			li= '<b>devices: </b>' + user.devices 
-		a(href='/user/'+=user._id) Edit
-		a(href='/user/'+=user._id +'/delete') Delete
+			li
+				b name: 
+				= user.name 
+			li
+				b username: 
+				= user.username 
+			li
+				b email: 
+				= user.email 
+			li
+				b password: 
+				= user.password 
+			li
+				b age: 
+				= user.age 
+			li
+				b devices: 
+				a(href='/user/'+user._id+'/devices/new') Add new devices
+				table(border='1', cellspacing='0')
+					thead
+						td model
+						td color
+						td
+					tbody
+						-for(i=0; i<user.devices.length; i++)
+							tr
+								td=user.devices[i].model
+								td=user.devices[i].color
+								td
+									a(href='/user/'+user._id +'/devices/delete') Delete
+
+		p
+			a(href='/user/'+user._id +'/edit') Edit
+			|   |   
+			a(href='/user/'+user._id +'/delete') Delete
+		p
+			a(href='/user') User home

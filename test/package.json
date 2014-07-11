@@ -1,0 +1,13 @@
+{
+	"name": "scaffolded",
+	"description": "My Application",
+	"version": "0.0.1",
+	"private": true,
+	"dependencies": {
+		"express": "3.x",
+		"mongodb": "1.2.x",
+		"mongoose": "latest",
+		"async": "latest",
+		"jade": "latest"
+	}
+}

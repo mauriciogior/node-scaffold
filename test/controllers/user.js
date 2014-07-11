@@ -18,7 +18,7 @@ var User = userModel.getUser();
  */
 exports.getNewUserForm = function(req, res)
 {
-	res.render('user/create');
+	res.status(200).render('user/create');
 };
 
 /*
@@ -91,7 +91,7 @@ exports.postUser = function(req, res)
 					{ email : data.email }
 				]
 			})
-			.exec(function(err, retData))
+			.exec(function(err, retData)
 			{
 				if(retData != null)
 				{
@@ -107,13 +107,140 @@ exports.postUser = function(req, res)
 		function(callback)
 		{
 			user = new User({
-				name = data.name,
-				username = data.username,
-				email = data.email,
-				password = data.password,
-				age = data.age,
+				name : data.name,
+				username : data.username,
+				email : data.email,
+				password : data.password,
+				age : data.age,
 			});
 
+			user.save(function(err, retData)
+			{
+				user = retData;
+
+				if(err != null)
+				{
+					status = 400;
+					callback(true);
+				}
+
+				callback();
+			});
+		}
+	], function(invalid)
+	{
+		if(format == 'json')
+			res.status(status).send(user);
+		else
+		{
+			if(status != 200)
+				res.status(200).render('user/create', { error : true });
+			else
+				res.status(status).render('user/get-single', { user : user });
+		}
+	});
+};
+
+/*
+ * [GET] FORM CREATE AN ENTRY OF DEVICES FOR User
+ *
+ *
+ * @return User user
+ */
+exports.getNewInternDevicesForm = function(req, res)
+{
+	var id = req.params.id;
+
+	User
+	.findOne({ _id : id })
+	.exec(function(err, retData)
+	{
+		if(retData == null)
+			res.status(404).render('user/not-found');
+		else
+			res.status(200).render('user/create-devices', { user : retData });
+	});
+};
+
+/*
+ * [POST] CREATE AN ENTRY OF DEVICES FOR User
+ *
+ * @param String model
+ * @param Number color
+ *
+ * @return User user
+ */
+exports.postNewInternDevicesForm = function(req, res)
+{
+	var id = req.params.id;
+	var data = req.body;
+
+	var status = 200;
+	var format = 'html';
+
+	var user = null;
+
+	async.series([
+
+		function(callback)
+		{
+			if(data == null)
+			{
+				status = 400;
+				callback(true);
+			}
+			else if(data.model === undefined)
+			{
+				status = 400;
+				callback(true);
+			}
+			else if(data.color === undefined)
+			{
+				status = 400;
+				callback(true);
+			}
+			else
+			{
+				if(data.format == 'json')
+					format = data.format;
+				callback();
+			}
+		},
+		function(callback)
+		{
+			User
+			.findOne({ _id : id })
+			.exec(function(err, retData)
+			{
+				if(retData == null)
+				{
+					status = 400;
+					callback(true);
+				}
+				else
+				{
+					user = retData;
+
+					callback();
+				}
+			});
+		},
+		function(callback)
+		{
+			var devices = {};
+
+			devices.model = data.model;
+			devices.color = data.color;
+
+			if(user.devices === undefined)
+				user.devices = [];
+
+			user.devices.push(devices);
+
+			callback();
+		},
+		function(callback)
+		{
 			user.save(function(err, retData)
 			{
 				user = retData;
@@ -126,7 +253,7 @@ exports.postUser = function(req, res)
 		if(format == 'json')
 			res.status(status).send(user);
 		else
-			res.render('user/get-single', { user : user });
+			res.status(status).render('user/get-single', { user : user });
 	});
 };
 
@@ -157,12 +284,12 @@ exports.getUser = function(req, res)
 		{
 			User
 			.findOne({ _id : id })
-			.exec(function(err, retData))
+			.exec(function(err, retData)
 			{
 				user = retData;
 
-				callback()
-			}
+				callback();
+			});
 		}
 
 	], function(invalid)
@@ -170,7 +297,7 @@ exports.getUser = function(req, res)
 		if(format == 'json')
 			res.status(status).send(user);
 		else
-			res.render('user/get-single', { user : user });
+			res.status(status).render('user/get-single', { user : user });
 	});
 };
 
@@ -200,12 +327,12 @@ exports.getUsers = function(req, res)
 		{
 			User
 			.find()
-			.exec(function(err, retData))
+			.exec(function(err, retData)
 			{
 				users = retData;
 
 				callback()
-			}
+			});
 		}
 
 	], function(invalid)
@@ -213,7 +340,7 @@ exports.getUsers = function(req, res)
 		if(format == 'json')
 			res.status(status).send(users);
 		else
-			res.render('user/get-all', { users : users });
+			res.status(status).render('user/get-all', { users : users });
 	});
 };
 
@@ -225,7 +352,17 @@ exports.getUsers = function(req, res)
  */
 exports.getEditUserForm = function(req, res)
 {
-	res.render('user/update');
+	var id = req.params.id;
+
+	User
+	.findOne({ _id : id })
+	.exec(function(err, retData)
+	{
+		if(retData == null)
+			res.status(404).render('user/not-found');
+		else
+			res.status(200).render('user/update', { user : retData });
+	});
 };
 
 /*
@@ -288,24 +425,26 @@ exports.putUser = function(req, res)
 		{
 			if(data.name !== undefined)
 			{
-				user.name = name;
+				user.name = data.name;
 			}
 			if(data.username !== undefined)
 			{
-				user.username = username;
+				user.username = data.username;
 			}
 			if(data.email !== undefined)
 			{
-				user.email = email;
+				user.email = data.email;
 			}
 			if(data.password !== undefined)
 			{
-				user.password = password;
+				user.password = data.password;
 			}
 			if(data.age !== undefined)
 			{
-				user.age = age;
+				user.age = data.age;
 			}
+
+			callback();
 		},
 		function(callback)
 		{
@@ -320,7 +459,7 @@ exports.putUser = function(req, res)
 			{
 				if(retData != null)
 				{
-					if(retData._id != user._id)
+					if(!retData._id.equals(user._id))
 					{
 						status = 400;
 						callback(true);
@@ -350,7 +489,7 @@ exports.putUser = function(req, res)
 		if(format == 'json')
 			res.status(status).send(user);
 		else
-			res.render('user/get-single', { user : user });
+			res.status(status).render('user/get-single', { user : user });
 	});
 };
 
@@ -407,7 +546,7 @@ exports.deleteUser = function(req, res)
 		if(format == 'json')
 			res.status(status).send('');
 		else
-			res.render('user/delete');
+			res.status(status).render('user/delete');
 	});
 };
 
