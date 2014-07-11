@@ -48,10 +48,12 @@ app.get('/user/:id/edit', userController.getEditUserForm); // edit single entry 
 app.get('/user/:id/devices/new', userController.getNewInternDevicesForm); // new devices intern form
 
 /* Actions for user */
+app.post('/user/:id/devices', userController.postNewInternDevicesForm); // new devices intern
+app.delete('/user/:id/devices/:index', userController.deleteInternDevices); // delete devices intern
+
 app.post('/user', userController.postUser); // create new entry
 app.put('/user/:id', userController.putUser); // edit single entry
 app.delete('/user/:id', userController.deleteUser); // delete single entry
-app.post('/user/:id/devices', userController.postNewInternDevicesForm); // new devices intern
 
 /* Run the application */
 var port = 3000;

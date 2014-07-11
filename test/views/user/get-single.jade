@@ -7,6 +7,7 @@ html
 		style.
 			table { margin: 10px 0; }
 			td { padding: 5px; }
+			p table { display: inline-block; }
 	body
 		h1 Single entry for User
 		p <b>Path:</b> /
@@ -42,11 +43,14 @@ html
 								td=user.devices[i].model
 								td=user.devices[i].color
 								td
-									a(href='/user/'+user._id +'/devices/delete') Delete
+									form(action='/user/'+user._id +'/devices/'+i, method='POST')
+										input(type='hidden', name='_method', value='DELETE')
+										button Delete
 
-		p
-			a(href='/user/'+user._id +'/edit') Edit
-			|   |   
-			a(href='/user/'+user._id +'/delete') Delete
+		form(action='/user/'+user._id, method='POST')
+			input(type='hidden', name='_method', value='DELETE')
+			a(href='/user/'+user._id +'/edit')
+				button(type='button') Edit
+			button Delete
 		p
 			a(href='/user') User home

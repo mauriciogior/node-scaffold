@@ -77,8 +77,8 @@ exports.postUser = function(req, res)
 			}
 			else 
 			{
-				if(data.format == 'json')
-					format = data.format;
+				if(req.query.format != null && req.query.format == 'json')
+					format = req.query.format;
 				callback();
 			}
 		},
@@ -201,8 +201,8 @@ exports.postNewInternDevicesForm = function(req, res)
 			}
 			else
 			{
-				if(data.format == 'json')
-					format = data.format;
+				if(req.query.format != null && req.query.format == 'json')
+					format = req.query.format;
 				callback();
 			}
 		},
@@ -253,7 +253,7 @@ exports.postNewInternDevicesForm = function(req, res)
 		if(format == 'json')
 			res.status(status).send(user);
 		else
-			res.status(status).render('user/get-single', { user : user });
+			res.redirect('/user/'+user._id);
 	});
 };
 
@@ -265,8 +265,6 @@ exports.postNewInternDevicesForm = function(req, res)
 exports.getUser = function(req, res)
 {
 	var id = req.params.id;
-	var data = req.body;
-
 	var status = 200;
 	var format = 'html';
 
@@ -276,8 +274,8 @@ exports.getUser = function(req, res)
 
 		function(callback)
 		{
-			if(data != null && data.format == 'json')
-				format = data.format;
+			if(req.query.format != null && req.query.format == 'json')
+				format = req.query.format;
 			callback();
 		},
 		function(callback)
@@ -286,9 +284,17 @@ exports.getUser = function(req, res)
 			.findOne({ _id : id })
 			.exec(function(err, retData)
 			{
-				user = retData;
+				if(retData == null)
+				{
+					status = 400;
+					callback(true);
+				}
+				else
+				{
+					user = retData;
 
-				callback();
+					callback();
+				}
 			});
 		}
 
@@ -297,7 +303,12 @@ exports.getUser = function(req, res)
 		if(format == 'json')
 			res.status(status).send(user);
 		else
-			res.status(status).render('user/get-single', { user : user });
+		{
+			if(invalid)
+				res.status(status).render('user/not-found');
+			else
+				res.status(status).render('user/get-single', { user : user });
+		}
 	});
 };
 
@@ -308,8 +319,6 @@ exports.getUser = function(req, res)
  */
 exports.getUsers = function(req, res)
 {
-	var data = req.body;
-
 	var status = 200;
 	var format = 'html';
 
@@ -319,8 +328,8 @@ exports.getUsers = function(req, res)
 
 		function(callback)
 		{
-			if(data != null && data.format == 'json')
-				format = data.format;
+			if(req.query.format != null && req.query.format == 'json')
+				format = req.query.format;
 			callback();
 		},
 		function(callback)
@@ -397,8 +406,8 @@ exports.putUser = function(req, res)
 			}
 			else
 			{
-				if(data.format == 'json')
-					format = data.format;
+				if(req.query.format != null && req.query.format == 'json')
+					format = req.query.format;
 				callback();
 			}
 		},
@@ -501,7 +510,6 @@ exports.putUser = function(req, res)
 exports.deleteUser = function(req, res)
 {
 	var id = req.params.id;
-
 	var status = 200;
 	var format = 'html';
 
@@ -511,8 +519,8 @@ exports.deleteUser = function(req, res)
 
 		function(callback)
 		{
-			if(data != null && data.format == 'json')
-				format = data.format;
+			if(req.query.format != null && req.query.format == 'json')
+				format = req.query.format;
 			callback();
 		},
 		function(callback)
@@ -547,6 +555,68 @@ exports.deleteUser = function(req, res)
 			res.status(status).send('');
 		else
 			res.status(status).render('user/delete');
+	});
+};
+
+/*
+ * [DELETE] DELETE AN ENTRY OF DEVICES FOR User
+ *
+ *
+ * @return User user
+ */
+exports.deleteInternDevices = function(req, res)
+{
+	var id = req.params.id;
+	var index = req.params.index;
+	var status = 200;
+	var format = 'html';
+
+	var user = null;
+
+	async.series([
+
+		function(callback)
+		{
+			if(req.query.format != null && req.query.format == 'json')
+				format = req.query.format;
+			callback();
+		},
+		function(callback)
+		{
+			User
+			.findOne({ _id : id })
+			.exec(function(err, retData)
+			{
+				if(retData == null)
+				{
+					status = 400;
+					callback(true);
+				}
+				else
+				{
+					user = retData;
+
+					callback();
+				}
+			});
+		},
+		function(callback)
+		{
+			user.devices.splice(index, 1);
+
+			user.save(function(err, retData)
+			{
+				user = retData;
+
+				callback();
+			});
+		}
+	], function(invalid)
+	{
+		if(format == 'json')
+			res.status(status).send(user);
+		else
+			res.redirect('/user/'+user._id);
 	});
 };
 
