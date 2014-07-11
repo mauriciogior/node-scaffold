@@ -1,13 +1,25 @@
 /*
  * EXTENSIONS
  */
-var async = require('async')
+var jade = require('jade')
+	, async = require('async')
 	, userModel = require('../models/user.js');
 
 /*
  * MODELS
  */
 var User = userModel.getUser();
+
+/*
+ * [GET] FORM CREATE AN ENTRY FOR User
+ *
+ *
+ * @return User user
+ */
+exports.getNewUserForm = function(req, res)
+{
+	res.render('user/create');
+};
 
 /*
  * [POST] CREATE AN ENTRY FOR User
@@ -114,7 +126,7 @@ exports.postUser = function(req, res)
 		if(format == 'json')
 			res.status(status).send(user);
 		else
-			res.render('getUser', { data : user });
+			res.render('user/get-single', { user : user });
 	});
 };
 
@@ -158,7 +170,7 @@ exports.getUser = function(req, res)
 		if(format == 'json')
 			res.status(status).send(user);
 		else
-			res.render('getUser', { data : user });
+			res.render('user/get-single', { user : user });
 	});
 };
 
@@ -201,8 +213,19 @@ exports.getUsers = function(req, res)
 		if(format == 'json')
 			res.status(status).send(users);
 		else
-			res.render('getUsers', { data : users });
+			res.render('user/get-all', { users : users });
 	});
+};
+
+/*
+ * [GET] FORM EDIT AN ENTRY FOR User
+ *
+ *
+ * @return View
+ */
+exports.getEditUserForm = function(req, res)
+{
+	res.render('user/update');
 };
 
 /*
@@ -327,7 +350,7 @@ exports.putUser = function(req, res)
 		if(format == 'json')
 			res.status(status).send(user);
 		else
-			res.render('getUser', { data : user });
+			res.render('user/get-single', { user : user });
 	});
 };
 
@@ -384,7 +407,7 @@ exports.deleteUser = function(req, res)
 		if(format == 'json')
 			res.status(status).send('');
 		else
-			res.render('deleteUser', { data : user });
+			res.render('user/delete');
 	});
 };
 

@@ -91,14 +91,15 @@
 			var dissectModel = require('./lib/dissect-model');
 			var dissectController = require('./lib/dissect-controller');
 			var dissectView = require('./lib/dissect-view');
-			//var dissectServer = require('./lib/dissect-server');
+			var dissectServer = require('./lib/dissect-server');
+			
+			dissectServer.dissect(this, json.models);
 
 			for(var index in json.models)
 			{
 				dissectModel.dissect(this, json.models[index]);
 				dissectController.dissect(this, json.models[index]);
 				dissectView.dissect(this, json.models[index]);
-				//dissectServer.dissect(this, json.models[index]);
 			}
 		},
 
