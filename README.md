@@ -87,6 +87,13 @@ $ node scaffold.js --file /path/to/scaffold.json
 
 Remeber to install all dependencies!
 
+Now you just need to test your routes! In this example:
+
+```shell
+curl http://localhost:3000/user
+curl http://localhost:3000/car
+```
+
 To see other usage options (very limited at the moment), just
 ```shell
 $ node scaffold.js --help
