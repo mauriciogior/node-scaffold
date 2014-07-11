@@ -77,7 +77,7 @@ After that, you need to create a file where you want to scaffold:
 
 **scaffold.js**
 ```javascript
-require('../index.js').exec();
+require('node-scaffold').exec();
 ```
 
 Now, just execute it!
