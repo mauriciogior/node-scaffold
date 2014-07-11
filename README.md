@@ -75,13 +75,6 @@ Now, just execute it!
 $ node scaffold.js --file /path/to/scaffold.json
 ```
 
-*If you have problems like "cannot find module 'node-scaffold'", probably your NODE_PATH is wrong!*
-
-*In mac:*
-```shell
-$ export NODE_PATH=/usr/local/lib/node_modules
-```
-
 Remeber to install all dependencies!
 ```shell
 $ sudo npm install
@@ -97,6 +90,17 @@ To see other usage options (very limited at the moment), just
 ```shell
 $ node scaffold.js --help
 ```
+
+### Having problems?
+
+*If you have problems like "cannot find module 'node-scaffold'", probably your NODE_PATH is wrong!*
+
+*In mac:*
+```shell
+$ export NODE_PATH=/usr/local/lib/node_modules
+```
+
+*In linux: you can handle it :)*
 
 ## TODO List
 * Add relationships between models
