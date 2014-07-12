@@ -34,7 +34,6 @@ Here is a sample of this file:
 	"models": [
 		{
 			"name": "User", // always singular!
-			"crud": true,
 			"fields": [
 				{ "name": "name", "type": "String" },
 				{ "name": "username", "type": "String", "unique": true },
@@ -47,15 +46,16 @@ Here is a sample of this file:
 						{ "name": "model", "type": "String" },
 						{ "name": "color", "type": "Number" }
 					]
-				}
+				},
+				{ "name": "car", "type": "{Ref}", "model": "Car" }
 			]
 		},
 		{
-			"name": "Car", // always singular!
-			"crud": true,
+			"name": "Car",
 			"fields": [
 				{ "name": "name", "type": "String" },
-				{ "name": "model", "type": "String" }
+				{ "name": "model", "type": "String" },
+				{ "name": "owners", "type": "[{Ref}]", "model": "User" }
 			]
 		}
 	]
