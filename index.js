@@ -1,9 +1,11 @@
+'use strict';
+
 (function()
 {
 	// Extensions
-	var fs = require('fs');
-	var arg = require('./lib/argument-parser');
-	var JSONcleaner = require('./lib/comment-cut-out');
+	var fs = require('fs')
+	, arg = require('./lib/argument-parser')
+	, JSONcleaner = require('./lib/comment-cut-out');
 
 	// Constants
 	var ct = require('./lib/constants');
@@ -37,8 +39,8 @@
 			}
 			else
 			{
-				var err = false;
-				var file;
+				var err = false
+				, file;
 
 				try
 				{
@@ -88,10 +90,10 @@
 				fs.mkdirSync('./views');
 			}
 
-			var dissectModel = require('./lib/dissect-model');
-			var dissectController = require('./lib/dissect-controller');
-			var dissectView = require('./lib/dissect-view');
-			var dissectServer = require('./lib/dissect-server');
+			var dissectModel = require('./lib/dissect-model')
+			, dissectController = require('./lib/dissect-controller')
+			, dissectView = require('./lib/dissect-view')
+			, dissectServer = require('./lib/dissect-server');
 			
 			dissectServer.dissect(this, json.models);
 

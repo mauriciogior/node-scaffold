@@ -22,6 +22,9 @@
 			"type": "GPL v2"
 		}
 	],
+	"dependencies": {
+		"ejs": "latest"
+	},
 	"bugs": {
 		"url": "https://github.com/mauriciogior/node-scaffold/issues"
 	},
