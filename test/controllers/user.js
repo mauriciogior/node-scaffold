@@ -28,7 +28,7 @@ exports.getNewUserForm = function(req, res)
  * @param String username
  * @param String password
  * @param Number age
- * @param {Ref} car
+ * @param Car car
  *
  * @return User user
  */
@@ -123,7 +123,21 @@ exports.postUser = function(req, res)
 					callback(true);
 				}
 
-				callback();
+				else
+				{
+					var options = [{
+						path: 'car',
+						model: 'Car',
+					}]
+
+					User
+					.populate(user, options, function(err, retData)
+					{
+						user = retData;
+
+						callback();
+					});
+				}
 			});
 		}
 	], function(invalid)
@@ -281,6 +295,7 @@ exports.getUser = function(req, res)
 		{
 			User
 			.findOne({ _id : id })
+			.populate('car')
 			.exec(function(err, retData)
 			{
 				if(retData == null)
@@ -335,6 +350,7 @@ exports.getUsers = function(req, res)
 		{
 			User
 			.find()
+			.populate('car')
 			.exec(function(err, retData)
 			{
 				users = retData;

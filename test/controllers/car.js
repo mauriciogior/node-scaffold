@@ -26,7 +26,6 @@ exports.getNewCarForm = function(req, res)
  *
  * @param String name
  * @param String model
- * @param [{Ref}] owner
  *
  * @return Car car
  */
@@ -58,11 +57,6 @@ exports.postCar = function(req, res)
 				status = 400;
 				callback(true);
 			}
-			else if(data.owner === undefined)
-			{
-				status = 400;
-				callback(true);
-			}
 			else 
 			{
 				if(req.query.format != null && req.query.format == 'json')
@@ -88,7 +82,10 @@ exports.postCar = function(req, res)
 					callback(true);
 				}
 
-				callback();
+				else
+				{
+					callback();
+				}
 			});
 		}
 	], function(invalid)
@@ -130,6 +127,7 @@ exports.getCar = function(req, res)
 		{
 			Car
 			.findOne({ _id : id })
+			.populate('owners')
 			.exec(function(err, retData)
 			{
 				if(retData == null)
@@ -184,6 +182,7 @@ exports.getCars = function(req, res)
 		{
 			Car
 			.find()
+			.populate('owners')
 			.exec(function(err, retData)
 			{
 				cars = retData;
