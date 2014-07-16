@@ -15,20 +15,20 @@ html
 			thead
 				td name
 				td username
-				td email
 				td password
 				td age
 				td devices
+				td car
 				td
 			tbody
 				-for(var i=0; i<users.length; i++)
 					tr
 						td=users[i].name
 						td=users[i].username
-						td=users[i].email
 						td=users[i].password
 						td=users[i].age
 						td='[Object '+users[i].devices.length+']'
+						td=users[i].car
 						td
 							a(href='/user/'+users[i]._id) View
 

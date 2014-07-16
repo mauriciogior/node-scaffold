@@ -25,14 +25,14 @@ html
 				label username
 				input(name='username', value=user.username)
 			fieldset
-				label email
-				input(name='email', value=user.email)
-			fieldset
 				label password
 				input(name='password', value=user.password)
 			fieldset
 				label age
 				input(name='age', value=user.age)
+			fieldset
+				label car
+				input(name='car', value=user.car)
 			fieldset
 				button(action='submit') Update
 				a(href='/user/'+user._id)

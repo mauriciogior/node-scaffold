@@ -5,11 +5,9 @@
 	"models": [
 		{
 			"name": "User", // always singular!
-			"crud": true,
 			"fields": [
 				{ "name": "name", "type": "String" },
 				{ "name": "username", "type": "String", "unique": true },
-				{ "name": "email", "type": "String", "unique": true },
 				{ "name": "password", "type": "String" },
 				{ "name": "age", "type": "Number" },
 				{
@@ -19,7 +17,16 @@
 						{ "name": "model", "type": "String" },
 						{ "name": "color", "type": "Number" }
 					]
-				}
+				},
+				{ "name": "car", "type": "{Ref}", "model": "Car" }
+			]
+		},
+		{
+			"name": "Car",
+			"fields": [
+				{ "name": "name", "type": "String" },
+				{ "name": "model", "type": "String" },
+				{ "name": "owner", "type": "[{Ref}]", "model": "User" }
 			]
 		}
 	]

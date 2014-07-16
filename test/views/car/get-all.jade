@@ -1,0 +1,29 @@
+doctype html
+html
+	head
+		title Car model
+		meta(charset='utf-8')
+		meta(name='viewport', content='width=device-width, initial-scale=1.0')
+		style.
+			table { margin: 10px 0; }
+			td { padding: 5px; }
+			p table { display: inline-block; }
+	body
+		h1 All entries for Car
+		p <b>Path:</b> /car
+		table(border='1', cellspacing='0')
+			thead
+				td name
+				td model
+				td owner
+				td
+			tbody
+				-for(var i=0; i<cars.length; i++)
+					tr
+						td=cars[i].name
+						td=cars[i].model
+						td=cars[i].owner
+						td
+							a(href='/car/'+cars[i]._id) View
+
+		a(href='/car/new') Add new entry

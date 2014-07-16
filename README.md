@@ -55,7 +55,7 @@ Here is a sample of this file:
 			"fields": [
 				{ "name": "name", "type": "String" },
 				{ "name": "model", "type": "String" },
-				{ "name": "owners", "type": "[{Ref}]", "model": "User" }
+				{ "name": "owner", "type": "[{Ref}]", "model": "User" } // always singular!
 			]
 		}
 	]

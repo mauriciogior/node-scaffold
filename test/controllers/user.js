@@ -26,9 +26,9 @@ exports.getNewUserForm = function(req, res)
  *
  * @param String name
  * @param String username
- * @param String email
  * @param String password
  * @param Number age
+ * @param {Ref} car
  *
  * @return User user
  */
@@ -60,17 +60,17 @@ exports.postUser = function(req, res)
 				status = 400;
 				callback(true);
 			}
-			else if(data.email === undefined)
-			{
-				status = 400;
-				callback(true);
-			}
 			else if(data.password === undefined)
 			{
 				status = 400;
 				callback(true);
 			}
 			else if(data.age === undefined)
+			{
+				status = 400;
+				callback(true);
+			}
+			else if(data.car === undefined)
 			{
 				status = 400;
 				callback(true);
@@ -87,8 +87,7 @@ exports.postUser = function(req, res)
 			User
 			.findOne({
 				$or : [
-					{ username : data.username },
-					{ email : data.email }
+					{ username : data.username }
 				]
 			})
 			.exec(function(err, retData)
@@ -109,9 +108,9 @@ exports.postUser = function(req, res)
 			user = new User({
 				name : data.name,
 				username : data.username,
-				email : data.email,
 				password : data.password,
 				age : data.age,
+				car : data.car,
 			});
 
 			user.save(function(err, retData)
@@ -379,9 +378,9 @@ exports.getEditUserForm = function(req, res)
  *
  * @param [opt] String name
  * @param [opt] String username
- * @param [opt] String email
  * @param [opt] String password
  * @param [opt] Number age
+ * @param [opt] {Ref} car
  *
  * @return User user
  */
@@ -440,10 +439,6 @@ exports.putUser = function(req, res)
 			{
 				user.username = data.username;
 			}
-			if(data.email !== undefined)
-			{
-				user.email = data.email;
-			}
 			if(data.password !== undefined)
 			{
 				user.password = data.password;
@@ -451,6 +446,10 @@ exports.putUser = function(req, res)
 			if(data.age !== undefined)
 			{
 				user.age = data.age;
+			}
+			if(data.car !== undefined)
+			{
+				user.car = data.car;
 			}
 
 			callback();
@@ -460,8 +459,7 @@ exports.putUser = function(req, res)
 			User
 			.findOne({
 				$or : [
-					{ username : data.username },
-					{ email : data.email }
+					{ username : data.username }
 				]
 			})
 			.exec(function(err, retData)

@@ -4,13 +4,13 @@ var mongoose = require('mongoose')
 var UserSchema = mongoose.Schema({
 	name: String,
 	username: String,
-	email: String,
 	password: String,
 	age: Number,
 	devices: [{
 		model: String,
 		color: Number
-	}]
+	}],
+	car: { type: Schema.Types.ObjectId, ref: 'Car' }
 });
 
 var User = mongoose.model('User', UserSchema);

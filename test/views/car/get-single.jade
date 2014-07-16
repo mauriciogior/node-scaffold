@@ -1,0 +1,33 @@
+doctype html
+html
+	head
+		title Car model
+		meta(charset='utf-8')
+		meta(name='viewport', content='width=device-width, initial-scale=1.0')
+		style.
+			table { margin: 10px 0; }
+			td { padding: 5px; }
+			p table { display: inline-block; }
+	body
+		h1 Single entry for Car
+		p <b>Path:</b> /
+			a(href='/car') car
+			='/'+car._id
+		ul
+			li
+				b name: 
+				= car.name 
+			li
+				b model: 
+				= car.model 
+			li
+				b owner: 
+				= car.owner 
+
+		form(action='/car/'+car._id, method='POST')
+			input(type='hidden', name='_method', value='DELETE')
+			a(href='/car/'+car._id +'/edit')
+				button(type='button') Edit
+			button Delete
+		p
+			a(href='/car') Car home

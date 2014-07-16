@@ -4,7 +4,8 @@ var express = require('express')
 	, mongoose = require('mongoose');
 
 /* Controllers */
-var userController = require('./controllers/user.js');
+var userController = require('./controllers/user.js')
+	, carController = require('./controllers/car.js');
 
 /* Database setup */
 var mongoUri = process.env.MONGOLAB_URI ||
@@ -54,6 +55,16 @@ app.delete('/user/:id/devices/:index', userController.deleteInternDevices); // d
 app.post('/user', userController.postUser); // create new entry
 app.put('/user/:id', userController.putUser); // edit single entry
 app.delete('/user/:id', userController.deleteUser); // delete single entry
+/* Views for car */
+app.get('/car', carController.getCars); // list all entries
+app.get('/car/new', carController.getNewCarForm); // create new entry form
+app.get('/car/:id', carController.getCar); // get single entry
+app.get('/car/:id/edit', carController.getEditCarForm); // edit single entry form
+
+/* Actions for car */
+app.post('/car', carController.postCar); // create new entry
+app.put('/car/:id', carController.putCar); // edit single entry
+app.delete('/car/:id', carController.deleteCar); // delete single entry
 
 /* Run the application */
 var port = 3000;

@@ -21,9 +21,6 @@ html
 				b username: 
 				= user.username 
 			li
-				b email: 
-				= user.email 
-			li
 				b password: 
 				= user.password 
 			li
@@ -46,6 +43,9 @@ html
 									form(action='/user/'+user._id +'/devices/'+i, method='POST')
 										input(type='hidden', name='_method', value='DELETE')
 										button Delete
+			li
+				b car: 
+				= user.car 
 
 		form(action='/user/'+user._id, method='POST')
 			input(type='hidden', name='_method', value='DELETE')
