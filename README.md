@@ -9,7 +9,10 @@ $ npm install node-scaffold -g
 
 ### Description
 
-v0.1
+v0.2.0
+You can make relationships between models.
+
+v0.1.0
 Now it is only working with Express + MongoDB + Mongoose.
 
 I'll add another more options later!
