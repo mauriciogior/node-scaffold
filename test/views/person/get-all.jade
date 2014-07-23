@@ -1,0 +1,35 @@
+doctype html
+html
+	head
+		title Person model
+		meta(charset='utf-8')
+		meta(name='viewport', content='width=device-width, initial-scale=1.0')
+		style.
+			table { margin: 10px 0; }
+			td { padding: 5px; }
+			p table { display: inline-block; }
+	body
+		h1 All entries for Person
+		p <b>Path:</b> /person
+		table(border='1', cellspacing='0')
+			thead
+				td name
+				td username
+				td email
+				td password
+				td age
+				td octopus
+				td
+			tbody
+				-for(var i=0; i<people.length; i++)
+					tr
+						td=people[i].name
+						td=people[i].username
+						td=people[i].email
+						td=people[i].password
+						td=people[i].age
+						td='[Object '+people[i].octopus.length+']'
+						td
+							a(href='/person/'+people[i]._id) View
+
+		a(href='/person/new') Add new entry

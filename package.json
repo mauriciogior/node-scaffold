@@ -23,7 +23,8 @@
 		}
 	],
 	"dependencies": {
-		"ejs": "latest"
+		"ejs": "latest",
+		"inflection": "latest"
 	},
 	"bugs": {
 		"url": "https://github.com/mauriciogior/node-scaffold/issues"

@@ -4,7 +4,7 @@ var express = require('express')
 	, mongoose = require('mongoose');
 
 /* Controllers */
-var userController = require('./controllers/user.js');
+var personController = require('./controllers/person.js');
 
 /* Database setup */
 var mongoUri = process.env.MONGOLAB_URI ||
@@ -40,20 +40,20 @@ app.configure(function () {
 /* Welcome view */
 app.get('/', function(req, res) { res.send('<h1>Working!</h1>'); });
 
-/* Views for user */
-app.get('/user', userController.getUsers); // list all entries
-app.get('/user/new', userController.getNewUserForm); // create new entry form
-app.get('/user/:id', userController.getUser); // get single entry
-app.get('/user/:id/edit', userController.getEditUserForm); // edit single entry form
-app.get('/user/:id/devices/new', userController.getNewInternDevicesForm); // new devices intern form
+/* Views for person */
+app.get('/person', personController.getPersons); // list all entries
+app.get('/person/new', personController.getNewPersonForm); // create new entry form
+app.get('/person/:id', personController.getPerson); // get single entry
+app.get('/person/:id/edit', personController.getEditPersonForm); // edit single entry form
+app.get('/person/:id/octopus/new', personController.getNewInternOctopusForm); // new octopus intern form
 
-/* Actions for user */
-app.post('/user/:id/devices', userController.postNewInternDevicesForm); // new devices intern
-app.delete('/user/:id/devices/:index', userController.deleteInternDevices); // delete devices intern
+/* Actions for person */
+app.post('/person/:id/octopus', personController.postNewInternOctopusForm); // new octopus intern
+app.delete('/person/:id/octopus/:index', personController.deleteInternOctopus); // delete octopus intern
 
-app.post('/user', userController.postUser); // create new entry
-app.put('/user/:id', userController.putUser); // edit single entry
-app.delete('/user/:id', userController.deleteUser); // delete single entry
+app.post('/person', personController.postPerson); // create new entry
+app.put('/person/:id', personController.putPerson); // edit single entry
+app.delete('/person/:id', personController.deletePerson); // delete single entry
 
 /* Run the application */
 var port = 3000;

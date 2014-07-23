@@ -4,7 +4,7 @@
 {
 	"models": [
 		{
-			"name": "User", // always singular!
+			"name": "Person", // always singular!
 			"crud": true,
 			"fields": [
 				{ "name": "name", "type": "String" },
@@ -13,7 +13,7 @@
 				{ "name": "password", "type": "String" },
 				{ "name": "age", "type": "Number" },
 				{
-					"name": "devices",
+					"name": "octopus", // always singular!
 					"type": "Json",
 					"content": [
 						{ "name": "model", "type": "String" },

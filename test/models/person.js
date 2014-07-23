@@ -1,21 +1,21 @@
 var mongoose = require('mongoose')
 	, Schema = mongoose.Schema;
 
-var UserSchema = mongoose.Schema({
+var PersonSchema = mongoose.Schema({
 	name: String,
 	username: String,
 	email: String,
 	password: String,
 	age: Number,
-	devices: [{
+	octopi: [{
 		model: String,
 		color: Number
 	}]
 });
 
-var User = mongoose.model('User', UserSchema);
+var Person = mongoose.model('Person', PersonSchema);
 
-exports.getUser = function()
+exports.getPerson = function()
 {
-	return User;
+	return Person;
 }

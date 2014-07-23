@@ -1,7 +1,7 @@
 doctype html
 html
 	head
-		title User model
+		title Person model
 		meta(charset='utf-8')
 		meta(name='viewport', content='width=device-width, initial-scale=1.0')
 		style.
@@ -9,13 +9,13 @@ html
 			td { padding: 5px; }
 			p table { display: inline-block; }
 	body
-		h1 New entry for User - devices
+		h1 New entry for Person - Octopi
 		p <b>Path:</b> /
-			a(href='/user') user
+			a(href='/person') person
 			='/'
-			a(href='/user/'+user._id)=user._id
-			='/devices/new'
-		form(action='/user/'+user._id+'/devices', method='POST')
+			a(href='/person/'+person._id)=person._id
+			='/octopus/new'
+		form(action='/person/'+person._id+'/octopus', method='POST')
 			fieldset
 				label model
 				input(name='model', type='text')
@@ -25,9 +25,9 @@ html
 			fieldset
 				button(action='submit') Create
 
-				a(href='/user')
+				a(href='/person')
 					button(type='button') Cancel
 			-if(error !== undefined)
 				p Please fill all fields! Remember to validate the type of the fields!
 		p
-			a(href='/user') User home
+			a(href='/person') Person home

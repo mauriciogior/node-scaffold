@@ -1,7 +1,7 @@
 doctype html
 html
 	head
-		title User model
+		title Person model
 		meta(charset='utf-8')
 		meta(name='viewport', content='width=device-width, initial-scale=1.0')
 		style.
@@ -9,11 +9,11 @@ html
 			td { padding: 5px; }
 			p table { display: inline-block; }
 	body
-		h1 New entry for User
+		h1 New entry for Person
 		p <b>Path:</b> /
-			a(href='/user') user
+			a(href='/person') person
 			| /new
-		form(action='/user', method='POST')
+		form(action='/person', method='POST')
 			fieldset
 				label name
 				input(name='name', type='text')
@@ -32,9 +32,9 @@ html
 			fieldset
 				button(action='submit') Create
 
-				a(href='/user')
+				a(href='/person')
 					button(type='button') Cancel
 			-if(error !== undefined)
 				p Please fill all fields! Remember to validate the type of the fields!
 		p
-			a(href='/user') User home
+			a(href='/person') Person home

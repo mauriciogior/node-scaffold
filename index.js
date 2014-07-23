@@ -4,8 +4,9 @@
 {
 	// Extensions
 	var fs = require('fs')
-	, arg = require('./lib/argument-parser')
-	, JSONcleaner = require('./lib/comment-cut-out');
+	  , arg = require('./lib/argument-parser')
+	  , JSONcleaner = require('./lib/comment-cut-out')
+	  , normalize = require('./lib/normalize');
 
 	// Constants
 	var ct = require('./lib/constants');
@@ -71,6 +72,16 @@
 			}
 		},
 
+		cleanJSON : function(json)
+		{
+			for(var index in json.models)
+			{
+				json.models[index] = normalize.do(json.models[index]);
+			}
+
+			return json;
+		},
+
 		job : function(file)
 		{
 			var json = JSON.parse(JSONcleaner.clean(file));
@@ -90,10 +101,12 @@
 				fs.mkdirSync('./views');
 			}
 
+			json = this.cleanJSON(json);
+
 			var dissectModel = require('./lib/dissect-model')
-			, dissectController = require('./lib/dissect-controller')
-			, dissectView = require('./lib/dissect-view')
-			, dissectServer = require('./lib/dissect-server');
+			  , dissectController = require('./lib/dissect-controller')
+			  , dissectView = require('./lib/dissect-view')
+			  , dissectServer = require('./lib/dissect-server');
 			
 			dissectServer.dissect(this, json.models);
 

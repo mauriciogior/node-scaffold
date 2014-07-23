@@ -1,7 +1,7 @@
 doctype html
 html
 	head
-		title User model
+		title Person model
 		meta(charset='utf-8')
 		meta(name='viewport', content='width=device-width, initial-scale=1.0')
 		style.
@@ -9,33 +9,33 @@ html
 			td { padding: 5px; }
 			p table { display: inline-block; }
 	body
-		h1 Edit entry for User
+		h1 Edit entry for Person
 		p <b>Path:</b> /
-			a(href='/user') user
+			a(href='/person') person
 			='/'
-			a(href='/user/'+user._id)=user._id
+			a(href='/person/'+person._id)=person._id
 			='/edit'
-		form(action='/user/'+ user._id, method='POST')
+		form(action='/person/'+ person._id, method='POST')
 			input(type='hidden', name='_method', value='PUT')
 
 			fieldset
 				label name
-				input(name='name', value=user.name)
+				input(name='name', value=person.name)
 			fieldset
 				label username
-				input(name='username', value=user.username)
+				input(name='username', value=person.username)
 			fieldset
 				label email
-				input(name='email', value=user.email)
+				input(name='email', value=person.email)
 			fieldset
 				label password
-				input(name='password', value=user.password)
+				input(name='password', value=person.password)
 			fieldset
 				label age
-				input(name='age', value=user.age)
+				input(name='age', value=person.age)
 			fieldset
 				button(action='submit') Update
-				a(href='/user/'+user._id)
+				a(href='/person/'+person._id)
 					button(type='button') Cancel
 		p
-			a(href='/user') User home
+			a(href='/person') Person home

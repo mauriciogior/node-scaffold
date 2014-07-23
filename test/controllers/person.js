@@ -3,24 +3,26 @@
  */
 var jade = require('jade')
 	, async = require('async')
-	, userModel = require('../models/user.js');
+	, personModel = require('../models/person.js');
 
 /*
  * MODELS
  */
-var User = userModel.getUser();
+var Person = personModel.getPerson();
 
 /*
- * [GET] FORM CREATE AN ENTRY FOR User
+ * [GET] FORM CREATE AN ENTRY FOR Person
  *
- * @return User user
+ *
+ * @return Person person
  */
-exports.getNewUserForm = function(req, res) {
-	res.status(200).render('user/create');
+exports.getNewPersonForm = function(req, res)
+{
+	res.status(200).render('person/create');
 };
 
 /*
- * [POST] CREATE AN ENTRY FOR User
+ * [POST] CREATE AN ENTRY FOR Person
  *
  * @param String name
  * @param String username
@@ -28,16 +30,16 @@ exports.getNewUserForm = function(req, res) {
  * @param String password
  * @param Number age
  *
- * @return User user
+ * @return Person person
  */
-exports.postUser = function(req, res)
+exports.postPerson = function(req, res)
 {
 	var data = req.body;
 
 	var status = 200;
 	var format = 'html';
 
-	var user = null;
+	var person = null;
 
 	async.series([
 
@@ -73,7 +75,7 @@ exports.postUser = function(req, res)
 				status = 400;
 				callback(true);
 			}
-			else
+			else 
 			{
 				if(req.query.format != null && req.query.format == 'json')
 					format = req.query.format;
@@ -82,7 +84,7 @@ exports.postUser = function(req, res)
 		},
 		function(callback)
 		{
-			User
+			Person
 			.findOne({
 				$or : [
 					{ username : data.username },
@@ -104,7 +106,7 @@ exports.postUser = function(req, res)
 		},
 		function(callback)
 		{
-			user = new User({
+			person = new Person({
 				name : data.name,
 				username : data.username,
 				email : data.email,
@@ -112,9 +114,9 @@ exports.postUser = function(req, res)
 				age : data.age,
 			});
 
-			user.save(function(err, retData)
+			person.save(function(err, retData)
 			{
-				user = retData;
+				person = retData;
 
 				if(err != null)
 				{
@@ -128,47 +130,47 @@ exports.postUser = function(req, res)
 	], function(invalid)
 	{
 		if(format == 'json')
-			res.status(status).send(user);
+			res.status(status).send(person);
 		else
 		{
 			if(status != 200)
-				res.status(200).render('user/create', { error : true });
+				res.status(200).render('person/create', { error : true });
 			else
-				res.status(status).render('user/get-single', { user : user });
+				res.status(status).render('person/get-single', { person : person });
 		}
 	});
 };
 
 /*
- * [GET] FORM CREATE AN ENTRY OF DEVICES FOR User
+ * [GET] FORM CREATE AN ENTRY OF OCTOPUS FOR Person
  *
  *
- * @return User user
+ * @return Person person
  */
-exports.getNewInternDevicesForm = function(req, res)
+exports.getNewInternOctopusForm = function(req, res)
 {
 	var id = req.params.id;
 
-	User
+	Person
 	.findOne({ _id : id })
 	.exec(function(err, retData)
 	{
 		if(retData == null)
-			res.status(404).render('user/not-found');
+			res.status(404).render('person/not-found');
 		else
-			res.status(200).render('user/create-devices', { user : retData });
+			res.status(200).render('person/create-octopus', { person : retData });
 	});
 };
 
 /*
- * [POST] CREATE AN ENTRY OF DEVICES FOR User
+ * [POST] CREATE AN ENTRY OF OCTOPUS FOR Person
  *
  * @param String model
  * @param Number color
  *
- * @return User user
+ * @return Person person
  */
-exports.postNewInternDevicesForm = function(req, res)
+exports.postNewInternOctopusForm = function(req, res)
 {
 	var id = req.params.id;
 	var data = req.body;
@@ -176,7 +178,7 @@ exports.postNewInternDevicesForm = function(req, res)
 	var status = 200;
 	var format = 'html';
 
-	var user = null;
+	var person = null;
 
 	async.series([
 
@@ -206,7 +208,7 @@ exports.postNewInternDevicesForm = function(req, res)
 		},
 		function(callback)
 		{
-			User
+			Person
 			.findOne({ _id : id })
 			.exec(function(err, retData)
 			{
@@ -217,7 +219,7 @@ exports.postNewInternDevicesForm = function(req, res)
 				}
 				else
 				{
-					user = retData;
+					person = retData;
 
 					callback();
 				}
@@ -225,23 +227,23 @@ exports.postNewInternDevicesForm = function(req, res)
 		},
 		function(callback)
 		{
-			var devices = {};
+			var octopus = {};
 
-			devices.model = data.model;
-			devices.color = data.color;
+			octopus.model = data.model;
+			octopus.color = data.color;
 
-			if(user.devices === undefined)
-				user.devices = [];
+			if(person.octopi === undefined)
+				person.octopi = [];
 
-			user.devices.push(devices);
+			person.octopi.push(octopus);
 
 			callback();
 		},
 		function(callback)
 		{
-			user.save(function(err, retData)
+			person.save(function(err, retData)
 			{
-				user = retData;
+				person = retData;
 
 				callback();
 			});
@@ -249,24 +251,24 @@ exports.postNewInternDevicesForm = function(req, res)
 	], function(invalid)
 	{
 		if(format == 'json')
-			res.status(status).send(user);
+			res.status(status).send(person);
 		else
-			res.redirect('/user/'+user._id);
+			res.redirect('/person/'+person._id);
 	});
 };
 
 /*
- * [GET] GET SINGLE ENTRY FOR User
+ * [GET] GET SINGLE ENTRY FOR Person
  *
- * @return User user
+ * @return Person person
  */
-exports.getUser = function(req, res)
+exports.getPerson = function(req, res)
 {
 	var id = req.params.id;
 	var status = 200;
 	var format = 'html';
 
-	var user = null;
+	var person = null;
 
 	async.series([
 
@@ -278,7 +280,7 @@ exports.getUser = function(req, res)
 		},
 		function(callback)
 		{
-			User
+			Person
 			.findOne({ _id : id })
 			.exec(function(err, retData)
 			{
@@ -289,7 +291,7 @@ exports.getUser = function(req, res)
 				}
 				else
 				{
-					user = retData;
+					person = retData;
 
 					callback();
 				}
@@ -299,28 +301,28 @@ exports.getUser = function(req, res)
 	], function(invalid)
 	{
 		if(format == 'json')
-			res.status(status).send(user);
+			res.status(status).send(person);
 		else
 		{
 			if(invalid)
-				res.status(status).render('user/not-found');
+				res.status(status).render('person/not-found');
 			else
-				res.status(status).render('user/get-single', { user : user });
+				res.status(status).render('person/get-single', { person : person });
 		}
 	});
 };
 
 /*
- * [GET] GET ALL ENTRIES FOR User
+ * [GET] GET ALL ENTRIES FOR Person
  *
- * @return User user
+ * @return Person person
  */
-exports.getUsers = function(req, res)
+exports.getPeople = function(req, res)
 {
 	var status = 200;
 	var format = 'html';
 
-	var users = null;
+	var people = null;
 
 	async.series([
 
@@ -332,11 +334,11 @@ exports.getUsers = function(req, res)
 		},
 		function(callback)
 		{
-			User
+			Person
 			.find()
 			.exec(function(err, retData)
 			{
-				users = retData;
+				people = retData;
 
 				callback()
 			});
@@ -345,35 +347,35 @@ exports.getUsers = function(req, res)
 	], function(invalid)
 	{
 		if(format == 'json')
-			res.status(status).send(users);
+			res.status(status).send(people);
 		else
-			res.status(status).render('user/get-all', { users : users });
+			res.status(status).render('person/get-all', { people : people });
 	});
 };
 
 /*
- * [GET] FORM EDIT AN ENTRY FOR User
+ * [GET] FORM EDIT AN ENTRY FOR Person
  *
  *
  * @return View
  */
-exports.getEditUserForm = function(req, res)
+exports.getEditPersonForm = function(req, res)
 {
 	var id = req.params.id;
 
-	User
+	Person
 	.findOne({ _id : id })
 	.exec(function(err, retData)
 	{
 		if(retData == null)
-			res.status(404).render('user/not-found');
+			res.status(404).render('person/not-found');
 		else
-			res.status(200).render('user/update', { user : retData });
+			res.status(200).render('person/update', { person : retData });
 	});
 };
 
 /*
- * [PUT] EDIT AN ENTRY FOR User
+ * [PUT] EDIT AN ENTRY FOR Person
  *
  * @param [opt] String name
  * @param [opt] String username
@@ -381,9 +383,9 @@ exports.getEditUserForm = function(req, res)
  * @param [opt] String password
  * @param [opt] Number age
  *
- * @return User user
+ * @return Person person
  */
-exports.putUser = function(req, res)
+exports.putPerson = function(req, res)
 {
 	var id = req.params.id;
 	var data = req.body;
@@ -391,7 +393,7 @@ exports.putUser = function(req, res)
 	var status = 200;
 	var format = 'html';
 
-	var user = null;
+	var person = null;
 
 	async.series([
 
@@ -411,7 +413,7 @@ exports.putUser = function(req, res)
 		},
 		function(callback)
 		{
-			User
+			Person
 			.findOne({ _id : id })
 			.exec(function(err, retData)
 			{
@@ -422,7 +424,7 @@ exports.putUser = function(req, res)
 				}
 				else
 				{
-					user = retData;
+					person = retData;
 
 					callback();
 				}
@@ -432,30 +434,30 @@ exports.putUser = function(req, res)
 		{
 			if(data.name !== undefined)
 			{
-				user.name = data.name;
+				person.name = data.name;
 			}
 			if(data.username !== undefined)
 			{
-				user.username = data.username;
+				person.username = data.username;
 			}
 			if(data.email !== undefined)
 			{
-				user.email = data.email;
+				person.email = data.email;
 			}
 			if(data.password !== undefined)
 			{
-				user.password = data.password;
+				person.password = data.password;
 			}
 			if(data.age !== undefined)
 			{
-				user.age = data.age;
+				person.age = data.age;
 			}
 
 			callback();
 		},
 		function(callback)
 		{
-			User
+			Person
 			.findOne({
 				$or : [
 					{ username : data.username },
@@ -466,7 +468,7 @@ exports.putUser = function(req, res)
 			{
 				if(retData != null)
 				{
-					if(!retData._id.equals(user._id))
+					if(!retData._id.equals(person._id))
 					{
 						status = 400;
 						callback(true);
@@ -484,9 +486,9 @@ exports.putUser = function(req, res)
 		},
 		function(callback)
 		{
-			user.save(function(err, retData)
+			person.save(function(err, retData)
 			{
-				user = retData;
+				person = retData;
 
 				callback();
 			});
@@ -494,24 +496,24 @@ exports.putUser = function(req, res)
 	], function(invalid)
 	{
 		if(format == 'json')
-			res.status(status).send(user);
+			res.status(status).send(person);
 		else
-			res.status(status).render('user/get-single', { user : user });
+			res.status(status).render('person/get-single', { person : person });
 	});
 };
 
 /*
- * [DELETE] DELETE AN ENTRY FOR User
+ * [DELETE] DELETE AN ENTRY FOR Person
  *
  * @return null
  */
-exports.deleteUser = function(req, res)
+exports.deletePerson = function(req, res)
 {
 	var id = req.params.id;
 	var status = 200;
 	var format = 'html';
 
-	var user = null;
+	var person = null;
 
 	async.series([
 
@@ -523,7 +525,7 @@ exports.deleteUser = function(req, res)
 		},
 		function(callback)
 		{
-			User
+			Person
 			.findOne({ _id : id })
 			.exec(function(err, retData)
 			{
@@ -534,7 +536,7 @@ exports.deleteUser = function(req, res)
 				}
 				else
 				{
-					user = retData;
+					person = retData;
 
 					callback();
 				}
@@ -542,7 +544,7 @@ exports.deleteUser = function(req, res)
 		},
 		function(callback)
 		{
-			user.remove(function(err, retData)
+			person.remove(function(err, retData)
 			{
 				callback();
 			});
@@ -552,24 +554,24 @@ exports.deleteUser = function(req, res)
 		if(format == 'json')
 			res.status(status).send('');
 		else
-			res.status(status).render('user/delete');
+			res.status(status).render('person/delete');
 	});
 };
 
 /*
- * [DELETE] DELETE AN ENTRY OF DEVICES FOR User
+ * [DELETE] DELETE AN ENTRY OF OCTOPUS FOR Person
  *
  *
- * @return User user
+ * @return Person person
  */
-exports.deleteInternDevices = function(req, res)
+exports.deleteInternOctopus = function(req, res)
 {
 	var id = req.params.id;
 	var index = req.params.index;
 	var status = 200;
 	var format = 'html';
 
-	var user = null;
+	var person = null;
 
 	async.series([
 
@@ -581,7 +583,7 @@ exports.deleteInternDevices = function(req, res)
 		},
 		function(callback)
 		{
-			User
+			Person
 			.findOne({ _id : id })
 			.exec(function(err, retData)
 			{
@@ -592,7 +594,7 @@ exports.deleteInternDevices = function(req, res)
 				}
 				else
 				{
-					user = retData;
+					person = retData;
 
 					callback();
 				}
@@ -600,11 +602,11 @@ exports.deleteInternDevices = function(req, res)
 		},
 		function(callback)
 		{
-			user.devices.splice(index, 1);
+			person.octopus.splice(index, 1);
 
-			user.save(function(err, retData)
+			person.save(function(err, retData)
 			{
-				user = retData;
+				person = retData;
 
 				callback();
 			});
@@ -612,9 +614,9 @@ exports.deleteInternDevices = function(req, res)
 	], function(invalid)
 	{
 		if(format == 'json')
-			res.status(status).send(user);
+			res.status(status).send(person);
 		else
-			res.redirect('/user/'+user._id);
+			res.redirect('/person/'+person._id);
 	});
 };
 

@@ -1,7 +1,7 @@
 doctype html
 html
 	head
-		title User model
+		title Person model
 		meta(charset='utf-8')
 		meta(name='viewport', content='width=device-width, initial-scale=1.0')
 		style.
@@ -9,48 +9,48 @@ html
 			td { padding: 5px; }
 			p table { display: inline-block; }
 	body
-		h1 Single entry for User
+		h1 Single entry for Person
 		p <b>Path:</b> /
-			a(href='/user') user
-			='/'+user._id
+			a(href='/person') person
+			='/'+person._id
 		ul
 			li
 				b name: 
-				= user.name 
+				= person.name 
 			li
 				b username: 
-				= user.username 
+				= person.username 
 			li
 				b email: 
-				= user.email 
+				= person.email 
 			li
 				b password: 
-				= user.password 
+				= person.password 
 			li
 				b age: 
-				= user.age 
+				= person.age 
 			li
-				b devices: 
-				a(href='/user/'+user._id+'/devices/new') Add new devices
+				b octopi: 
+				a(href='/person/'+person._id+'/octopus/new') Add new octopus
 				table(border='1', cellspacing='0')
 					thead
 						td model
 						td color
 						td
 					tbody
-						-for(i=0; i<user.devices.length; i++)
+						-for(i=0; i<person.octopus.length; i++)
 							tr
-								td=user.devices[i].model
-								td=user.devices[i].color
+								td=person.octopus[i].model
+								td=person.octopus[i].color
 								td
-									form(action='/user/'+user._id +'/devices/'+i, method='POST')
+									form(action='/person/'+person._id +'/octopus/'+i, method='POST')
 										input(type='hidden', name='_method', value='DELETE')
 										button Delete
 
-		form(action='/user/'+user._id, method='POST')
+		form(action='/person/'+person._id, method='POST')
 			input(type='hidden', name='_method', value='DELETE')
-			a(href='/user/'+user._id +'/edit')
+			a(href='/person/'+person._id +'/edit')
 				button(type='button') Edit
 			button Delete
 		p
-			a(href='/user') User home
+			a(href='/person') Person home
