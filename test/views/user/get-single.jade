@@ -27,20 +27,20 @@ html
 				b age: 
 				= user.age 
 			li
-				b devices: 
-				a(href='/user/'+user._id+'/devices/new') Add new devices
+				b device: 
+				a(href='/user/'+user._id+'/device/new') Add new device
 				table(border='1', cellspacing='0')
 					thead
 						td model
 						td color
 						td
 					tbody
-						-for(i=0; i<user.devices.length; i++)
+						-for(i=0; i<user.device.length; i++)
 							tr
-								td=user.devices[i].model
-								td=user.devices[i].color
+								td=user.device[i].model
+								td=user.device[i].color
 								td
-									form(action='/user/'+user._id +'/devices/'+i, method='POST')
+									form(action='/user/'+user._id +'/device/'+i, method='POST')
 										input(type='hidden', name='_method', value='DELETE')
 										button Delete
 			li

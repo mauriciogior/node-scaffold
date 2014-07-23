@@ -17,7 +17,7 @@ html
 				td username
 				td password
 				td age
-				td devices
+				td device
 				td car
 				td
 			tbody
@@ -27,7 +27,7 @@ html
 						td=users[i].username
 						td=users[i].password
 						td=users[i].age
-						td='[Object '+users[i].devices.length+']'
+						td='[Object '+users[i].device.length+']'
 						td=users[i].car
 						td
 							a(href='/user/'+users[i]._id) View

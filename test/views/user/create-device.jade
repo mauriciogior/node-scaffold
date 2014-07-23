@@ -1,0 +1,33 @@
+doctype html
+html
+	head
+		title User model
+		meta(charset='utf-8')
+		meta(name='viewport', content='width=device-width, initial-scale=1.0')
+		style.
+			table { margin: 10px 0; }
+			td { padding: 5px; }
+			p table { display: inline-block; }
+	body
+		h1 New entry for User - device
+		p <b>Path:</b> /
+			a(href='/user') user
+			='/'
+			a(href='/user/'+user._id)=user._id
+			='/device/new'
+		form(action='/user/'+user._id+'/device', method='POST')
+			fieldset
+				label model
+				input(name='model', type='text')
+			fieldset
+				label color
+				input(name='color', type='number')
+			fieldset
+				button(action='submit') Create
+
+				a(href='/user')
+					button(type='button') Cancel
+			-if(error !== undefined)
+				p Please fill all fields! Remember to validate the type of the fields!
+		p
+			a(href='/user') User home

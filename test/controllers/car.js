@@ -26,6 +26,7 @@ exports.getNewCarForm = function(req, res)
  *
  * @param String name
  * @param String model
+ * @param User owner
  *
  * @return Car car
  */
@@ -57,6 +58,11 @@ exports.postCar = function(req, res)
 				status = 400;
 				callback(true);
 			}
+			else if(data.owner === undefined)
+			{
+				status = 400;
+				callback(true);
+			}
 			else 
 			{
 				if(req.query.format != null && req.query.format == 'json')
@@ -84,7 +90,18 @@ exports.postCar = function(req, res)
 
 				else
 				{
-					callback();
+					var options = [{
+						path: 'owner',
+						model: 'User',
+					}]
+
+					Car
+					.populate(car, options, function(err, retData)
+					{
+						car = retData;
+
+						callback();
+					});
 				}
 			});
 		}
@@ -127,7 +144,7 @@ exports.getCar = function(req, res)
 		{
 			Car
 			.findOne({ _id : id })
-			.populate('owners')
+			.populate('owner')
 			.exec(function(err, retData)
 			{
 				if(retData == null)
@@ -182,7 +199,7 @@ exports.getCars = function(req, res)
 		{
 			Car
 			.find()
-			.populate('owners')
+			.populate('owner')
 			.exec(function(err, retData)
 			{
 				cars = retData;
@@ -226,7 +243,7 @@ exports.getEditCarForm = function(req, res)
  *
  * @param [opt] String name
  * @param [opt] String model
- * @param [opt] [{Ref}] owner
+ * @param [opt] {Ref} owner
  *
  * @return Car car
  */

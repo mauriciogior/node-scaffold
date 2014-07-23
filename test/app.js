@@ -1,7 +1,8 @@
 /* Extensions */
 var express = require('express')
-	, mongo = require('mongodb')
-	, mongoose = require('mongoose');
+  , methodOverride = require('method-override')
+  , mongo = require('mongodb')
+  , mongoose = require('mongoose');
 
 /* Controllers */
 var userController = require('./controllers/user.js')
@@ -34,8 +35,9 @@ app.use(express.static(__dirname + '/public'));
 /* Use developer logger and body parser (do not use multipart/form-data for simple post requests) */
 app.configure(function () {
 	app.use(express.logger('dev'));
-	app.use(express.bodyParser());
-	app.use(express.methodOverride());
+	app.use(express.urlencoded());
+	app.use(express.json());
+	app.use(methodOverride('_method'));
 });
 
 /* Welcome view */
@@ -46,11 +48,11 @@ app.get('/user', userController.getUsers); // list all entries
 app.get('/user/new', userController.getNewUserForm); // create new entry form
 app.get('/user/:id', userController.getUser); // get single entry
 app.get('/user/:id/edit', userController.getEditUserForm); // edit single entry form
-app.get('/user/:id/devices/new', userController.getNewInternDevicesForm); // new devices intern form
+app.get('/user/:id/device/new', userController.getNewInternDeviceForm); // new device intern form
 
 /* Actions for user */
-app.post('/user/:id/devices', userController.postNewInternDevicesForm); // new devices intern
-app.delete('/user/:id/devices/:index', userController.deleteInternDevices); // delete devices intern
+app.post('/user/:id/device', userController.postNewInternDeviceForm); // new device intern
+app.delete('/user/:id/device/:index', userController.deleteInternDevice); // delete device intern
 
 app.post('/user', userController.postUser); // create new entry
 app.put('/user/:id', userController.putUser); // edit single entry

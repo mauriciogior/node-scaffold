@@ -6,11 +6,11 @@ var UserSchema = mongoose.Schema({
 	username: String,
 	password: String,
 	age: Number,
-	devices: [{
+	device: [{
 		model: String,
 		color: Number
 	}],
-	car: { type: Schema.Types.ObjectId, ref: 'Car' }
+	cars: [{ type: Schema.Types.ObjectId, ref: 'Car' }]
 });
 
 var User = mongoose.model('User', UserSchema);

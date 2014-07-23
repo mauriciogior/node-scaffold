@@ -4,7 +4,7 @@ var mongoose = require('mongoose')
 var CarSchema = mongoose.Schema({
 	name: String,
 	model: String,
-	owners: [{ type: Schema.Types.ObjectId, ref: 'User' }]
+	owner: { type: Schema.Types.ObjectId, ref: 'User' }
 });
 
 var Car = mongoose.model('Car', CarSchema);

@@ -28,7 +28,6 @@ exports.getNewUserForm = function(req, res)
  * @param String username
  * @param String password
  * @param Number age
- * @param Car car
  *
  * @return User user
  */
@@ -66,11 +65,6 @@ exports.postUser = function(req, res)
 				callback(true);
 			}
 			else if(data.age === undefined)
-			{
-				status = 400;
-				callback(true);
-			}
-			else if(data.car === undefined)
 			{
 				status = 400;
 				callback(true);
@@ -125,18 +119,7 @@ exports.postUser = function(req, res)
 
 				else
 				{
-					var options = [{
-						path: 'car',
-						model: 'Car',
-					}]
-
-					User
-					.populate(user, options, function(err, retData)
-					{
-						user = retData;
-
-						callback();
-					});
+					callback();
 				}
 			});
 		}
@@ -155,12 +138,12 @@ exports.postUser = function(req, res)
 };
 
 /*
- * [GET] FORM CREATE AN ENTRY OF DEVICES FOR User
+ * [GET] FORM CREATE AN ENTRY OF DEVICE FOR User
  *
  *
  * @return User user
  */
-exports.getNewInternDevicesForm = function(req, res)
+exports.getNewInternDeviceForm = function(req, res)
 {
 	var id = req.params.id;
 
@@ -171,19 +154,19 @@ exports.getNewInternDevicesForm = function(req, res)
 		if(retData == null)
 			res.status(404).render('user/not-found');
 		else
-			res.status(200).render('user/create-devices', { user : retData });
+			res.status(200).render('user/create-device', { user : retData });
 	});
 };
 
 /*
- * [POST] CREATE AN ENTRY OF DEVICES FOR User
+ * [POST] CREATE AN ENTRY OF DEVICE FOR User
  *
  * @param String model
  * @param Number color
  *
  * @return User user
  */
-exports.postNewInternDevicesForm = function(req, res)
+exports.postNewInternDeviceForm = function(req, res)
 {
 	var id = req.params.id;
 	var data = req.body;
@@ -240,15 +223,15 @@ exports.postNewInternDevicesForm = function(req, res)
 		},
 		function(callback)
 		{
-			var devices = {};
+			var device = {};
 
-			devices.model = data.model;
-			devices.color = data.color;
+			device.model = data.model;
+			device.color = data.color;
 
-			if(user.devices === undefined)
-				user.devices = [];
+			if(user.device === undefined)
+				user.device = [];
 
-			user.devices.push(devices);
+			user.device.push(device);
 
 			callback();
 		},
@@ -295,7 +278,7 @@ exports.getUser = function(req, res)
 		{
 			User
 			.findOne({ _id : id })
-			.populate('car')
+			.populate('cars')
 			.exec(function(err, retData)
 			{
 				if(retData == null)
@@ -350,7 +333,7 @@ exports.getUsers = function(req, res)
 		{
 			User
 			.find()
-			.populate('car')
+			.populate('cars')
 			.exec(function(err, retData)
 			{
 				users = retData;
@@ -396,7 +379,7 @@ exports.getEditUserForm = function(req, res)
  * @param [opt] String username
  * @param [opt] String password
  * @param [opt] Number age
- * @param [opt] {Ref} car
+ * @param [opt] [{Ref}] car
  *
  * @return User user
  */
@@ -573,12 +556,12 @@ exports.deleteUser = function(req, res)
 };
 
 /*
- * [DELETE] DELETE AN ENTRY OF DEVICES FOR User
+ * [DELETE] DELETE AN ENTRY OF DEVICE FOR User
  *
  *
  * @return User user
  */
-exports.deleteInternDevices = function(req, res)
+exports.deleteInternDevice = function(req, res)
 {
 	var id = req.params.id;
 	var index = req.params.index;
@@ -616,7 +599,7 @@ exports.deleteInternDevices = function(req, res)
 		},
 		function(callback)
 		{
-			user.devices.splice(index, 1);
+			user.device.splice(index, 1);
 
 			user.save(function(err, retData)
 			{
