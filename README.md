@@ -50,14 +50,6 @@ Here is a sample of this file:
 					]
 				}
 			]
-		},
-		{
-			"name": "Car", // always singular!
-			"crud": true,
-			"fields": [
-				{ "name": "name", "type": "String" },
-				{ "name": "model", "type": "String" }
-			]
 		}
 	]
 }
@@ -83,6 +75,8 @@ $ sudo npm install
 
 Now you just need to test your routes! In this example:
 ```shell
+node app.js
+
 curl http://localhost:3000/user
 curl http://localhost:3000/car
 ```
@@ -90,6 +84,20 @@ curl http://localhost:3000/car
 To see other usage options (very limited at the moment), just
 ```shell
 $ node scaffold.js --help
+
+Usage: node xx.js [options argument]
+
+Options:
+  -h,  --http-framework name  Http framework to use (default: express).
+  -de, --db-engine name       DB engine to use (default: mongodb).
+  -df, --db-framework name    DB framework to use (default: mongoose).
+  -f,  --file filepath        File to read (required).
+  -F,  --force-overwrite      Force overwrite of existing files.
+
+Example:
+  node scaffold.js --file data.json
+
+Documentation can be found at http://github.com/mauriciogior/node-scaffold
 ```
 
 ### Having problems?
