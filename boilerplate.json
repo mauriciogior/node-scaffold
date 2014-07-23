@@ -13,7 +13,7 @@
 				{ "name": "password", "type": "String" },
 				{ "name": "age", "type": "Number" },
 				{
-					"name": "octopus", // always singular!
+					"name": "Octopus", // always singular!
 					"type": "Json",
 					"content": [
 						{ "name": "model", "type": "String" },

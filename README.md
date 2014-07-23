@@ -9,7 +9,7 @@ $ npm install node-scaffold -g
 
 ### Description
 
-v0.1
+v0.1.1
 Now it is only working with Express + MongoDB + Mongoose.
 
 I'll add another more options later!
@@ -19,6 +19,7 @@ Working:
 * ✓ ~~Generate controllers~~
 * ✓ ~~Generate views~~
 * ✓ ~~Generate application~~
+* ✓ ~~Inflection working (in English)~~
 
 ## Quick Usage
 
@@ -33,7 +34,7 @@ Here is a sample of this file:
 {
 	"models": [
 		{
-			"name": "User", // always singular!
+			"name": "Person", // always singular!
 			"crud": true,
 			"fields": [
 				{ "name": "name", "type": "String" },
@@ -41,7 +42,7 @@ Here is a sample of this file:
 				{ "name": "password", "type": "String" },
 				{ "name": "age", "type": "Number" },
 				{
-					"name": "devices",
+					"name": "Car", // always singular!
 					"type": "Json",
 					"content": [
 						{ "name": "model", "type": "String" },
@@ -104,6 +105,7 @@ $ export NODE_PATH=/usr/local/lib/node_modules
 
 ## TODO List
 * Add relationships between models
+* Use EJS for templating (intern)
 * Accept other http frameworks (besides express)
 * Accept other db engines (besides mongodb)
 * Accept other db frameworks (besides mongoose)
