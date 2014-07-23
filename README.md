@@ -9,7 +9,7 @@ $ npm install node-scaffold -g
 
 ### Description
 
-v0.1.1
+v0.1.2
 Now it is only working with Express + MongoDB + Mongoose.
 
 I'll add another more options later!
