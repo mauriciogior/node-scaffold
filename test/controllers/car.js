@@ -2,8 +2,8 @@
  * EXTENSIONS
  */
 var jade = require('jade')
-	, async = require('async')
-	, carModel = require('../models/car.js');
+  , async = require('async')
+  , carModel = require('../models/car.js');
 
 /*
  * MODELS

@@ -1,1 +1,1 @@
-require('../index.js').exec();
+require('../index').exec();

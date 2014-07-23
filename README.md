@@ -43,22 +43,26 @@ Here is a sample of this file:
 				{ "name": "password", "type": "String" },
 				{ "name": "age", "type": "Number" },
 				{
-					"name": "devices",
+					"name": "device", // always singular!
 					"type": "Json",
 					"content": [
 						{ "name": "model", "type": "String" },
 						{ "name": "color", "type": "Number" }
 					]
 				},
-				{ "name": "car", "type": "{Ref}", "model": "Car" }
+				{
+					"name": "car", // always singular!
+					"type": "[{Ref}]",
+					"model": "Car"
+				}
 			]
 		},
 		{
-			"name": "Car",
+			"name": "Car", // always singular!
 			"fields": [
 				{ "name": "name", "type": "String" },
 				{ "name": "model", "type": "String" },
-				{ "name": "owner", "type": "[{Ref}]", "model": "User" } // always singular!
+				{ "name": "owner", "type": "{Ref}", "model": "User" }
 			]
 		}
 	]
