@@ -1,3 +1,8 @@
+0.1.3 / 2014-10-05
+==================
+
+  * fixed format bug (changing later from query to header).
+
 0.1.2 / 2014-07-23
 ==================
 
